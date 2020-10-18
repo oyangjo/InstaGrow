@@ -1,1 +1,4 @@
 # InstaGrow
+The goal of this repo is to gain profile exposure by liking target audiences' posts. We retrieve the target audiences' username through inputting posts' URL's. For example, I really like @kingjames post. So, I input his specific post URL. InstaGrow will record all the commenters on the post. Then, base on user define criteria, it will classify these users into three different groups: green, yellow, and red. Green is users who have good criteria or higher chance to follow you; yellow is mediocore criteria with lower chance to follow you; red is bad criteria that will very unlikely to follow you or a private account. Lastly, you can run ThreeLikes.py and define the amount of users to like per session. We grab 80% green profiles and 20% yellow profiles. 
+
+Third Party plug-ins: InstaTouch, BeautifulSoup4, and InstaPy
