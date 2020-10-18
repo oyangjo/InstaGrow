@@ -3,7 +3,7 @@ The goal of this repo is to gain profile exposure by liking target audiences' po
 
 Third Party plug-ins: InstaTouch, BeautifulSoup4, and InstaPy
 
-##Instructions
+## Instructions
 1. Add url's to URL.txt (one url per line)
 2. Run 'python3 Run1.py' to classify commenters into three different groups
 3. Run 'python3 ThreeLikes.py' to start liking session
