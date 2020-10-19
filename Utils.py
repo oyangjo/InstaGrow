@@ -43,7 +43,8 @@ def scrape_data(username):
     s = BeautifulSoup(r.text, "html.parser")  # converting the text 
 
     meta = s.find("meta", property ="og:description")  # finding meta info
-    info = parse_data(meta.attrs['content']) # calling parse method
+    if(meta):
+        info = parse_data(meta.attrs['content']) # calling parse method
     
     info.append( "\"is_private\":true" in s.prettify() )  # checking if private
 

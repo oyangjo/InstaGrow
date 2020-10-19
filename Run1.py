@@ -11,7 +11,7 @@ import validators
 import Utils
 
 URL = "https://www.instagram.com/p/B6bxEkoJUkU/"
-NUM = 1000
+NUM = input("Number of commenters to scrape per posts: ")
 
 #truncate the log file
 with open('current.log', 'w'):
