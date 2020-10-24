@@ -24,8 +24,14 @@ session.set_quota_supervisor(enabled=True, sleep_after=["likes_h", "likes_d"], s
                               peak_likes_hourly=MAX_L_H, peak_likes_daily=MAX_L_D)
 
 with smart_run(session):
-  #activity		
-  session.set_do_like(True, percentage=100)
+  #activity
+  session.set_comments(["I love your pic!", "Love your style :)", "This is fire!", "Gorgeous!",
+                        "You have a great profile", "This is just great :)", "Nothing beats this :)",
+                        "Wow! I wish I have posts like that", "Sheesh! I needa step up my photo-game",
+                        "This is just simply amazing lol", "Stay safe!", "Stay Safe out there!",
+                        "Safety is always first :)", "Hope we all stay safe!", "Safety first!"])
+  session.set_do_comment(enabled=True, percentage=20)
+  session.set_do_like(True, percentage=80)
   
   #load data
   username_g = Utils.load_pickle("username_g")
