@@ -14,13 +14,13 @@ from instapy import InstaPy
 from instapy import smart_run
 
 FLAG = 1
-F_NUM = 37
-NUM_G = 40
-NUM_Y = 10
+F_NUM = 69
+NUM_G = 64
+NUM_Y = 16
 
 insta_username = 'mrjoyang'
-insta_password = 'JoecLean423'
-session = InstaPy(username=insta_username, password=insta_password, headless_browser=True)
+insta_password = 'JoecLean423!'
+session = InstaPy(username=insta_username, password=insta_password, headless_browser=False)
 
 with smart_run(session):
   #activity		

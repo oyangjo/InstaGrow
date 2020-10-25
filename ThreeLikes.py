@@ -5,6 +5,7 @@ It'll modify username_g, username_y, and username_recycle after session ends
 '''
 
 import datetime
+import random
 import Utils
 from instapy import InstaPy
 from instapy import smart_run
@@ -29,7 +30,8 @@ with smart_run(session):
                         "You have a great profile", "This is just great :)", "Nothing beats this :)",
                         "Wow! I wish I have posts like that", "Sheesh! I needa step up my photo-game",
                         "This is just simply amazing lol", "Stay safe!", "Stay Safe out there!",
-                        "Safety is always first :)", "Hope we all stay safe!", "Safety first!"])
+                        "Safety is always first :)", "Hope we all stay safe!", "Safety first!",
+                        "OMG!", "Oh my!", "Sheeeesh", "Nice shot!", "Sheeesh! Nice shot!"])
   session.set_do_comment(enabled=True, percentage=20)
   session.set_do_like(True, percentage=80)
   
@@ -39,19 +41,31 @@ with smart_run(session):
   username_recycle = Utils.load_pickle("username_recycle")
   username_cur = Utils.load_pickle("username_cur")
 
-  #grab 40 greens and 10 yellows to create username_cur
-  Utils.store_pickle('username_prev', username_cur) #store the previous session's info 
-  l1 = username_g[:NUM_G]
-  l2 = username_y[:NUM_Y]
+  #grab 40 random greens and 10 random yellows to create username_cur
+  Utils.store_pickle('username_prev', username_cur)          #store the previous session's info 
+  l1_idx = random.sample(range(len(username_g)), NUM_G)      #random indexes from list 
+  l2_idx = random.sample(range(len(username_y)), NUM_Y)
+  l1, l2 = [], []
+
+  for idx in l1_idx:   #Add username in l1 using indexes
+    l1.append(username_g[idx])
+  for idx in l2_idx:
+    l2.append(username_y[idx])
+
   username_cur = l1 + l2
+  Utils.store_pickle('username_cur_g_index', l1_idx)  #store the cur index for green and yellow
+  Utils.store_pickle('username_cur_y_index', l2_idx)
   Utils.store_pickle('username_cur', username_cur)  #store the current session's info
 
   #start session
   session.interact_by_users(username_cur, amount=3, randomize=False, media='Photo')
 
   #load the new data back to memory
-  del username_g[:NUM_G]
-  del username_y[:NUM_Y]
+  for un in l1:
+    username_g.remove(un)
+  for un in l2:
+    username_y.remove(un)
+
   for user in username_cur:
     username_recycle[user] = datetime.date.today()
 

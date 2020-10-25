@@ -1,7 +1,19 @@
-l = [2, 2, 3]
+import random
 
-for i, j in enumerate(l):
-    print(i, j)
+t = [3, 52, 20, 40, 69]
+temp = []
+
+idx = random.sample(range(len(t)), 2)
+print("original" + str(t))
+print(idx)
+for i in idx:
+    temp.append(t[i])
+for elem in temp:
+    t.remove(elem)
+
+print(t)
+
+
 
 #stuff relating to cache
 
