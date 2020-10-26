@@ -13,10 +13,7 @@ import Utils
 from instapy import InstaPy
 from instapy import smart_run
 
-FLAG = 1
-F_NUM = 69
-NUM_G = 64
-NUM_Y = 16
+F_NUM = int(input("The number that fucked up on: "))
 
 insta_username = 'mrjoyang'
 insta_password = 'JoecLean423!'
@@ -24,6 +21,13 @@ session = InstaPy(username=insta_username, password=insta_password, headless_bro
 
 with smart_run(session):
   #activity		
+  session.set_comments(["I love your pic!", "Love your style :)", "This is fire!", "Gorgeous!",
+                        "You have a great profile", "This is just great :)", "Nothing beats this :)",
+                        "Wow! I wish I have posts like that", "Sheesh! I needa step up my photo-game",
+                        "This is just simply amazing lol", "Stay safe!", "Stay Safe out there!",
+                        "Safety is always first :)", "Hope we all stay safe!", "Safety first!",
+                        "OMG!", "Oh my!", "Sheeeesh", "Nice shot!", "Sheeesh! Nice shot!"])
+  session.set_do_comment(enabled=True, percentage=20)
   session.set_do_like(True, percentage=100)
   
   #load data
@@ -31,25 +35,22 @@ with smart_run(session):
   username_y = Utils.load_pickle("username_y")
   username_recycle = Utils.load_pickle("username_recycle")
   username_cur = Utils.load_pickle("username_cur")
+  cur_g_idx = Utils.load_pickle("username_cur_g_index")
+  cur_y_idx = Utils.load_pickle("username_cur_y_index")
 
-  #grab 40 greens and 10 yellows to create username_cur
-  l1 = username_g[:NUM_G]
-  l2 = username_y[:NUM_Y]
-  username_org = l1 + l2
-
-  #if crashed the previous time
-  if (FLAG):
-    del username_cur[:F_NUM]
-    print(username_cur)
+  #grab unfinished usernames for previous session
+  username_not_done = username_cur[F_NUM:]
 
   #start session
-  session.interact_by_users(username_cur, amount=3, randomize=False, media='Photo')
+  session.interact_by_users(username_not_done, amount=3, randomize=False, media='Photo')
 
   #load the new data back to memory
-  del username_g[:NUM_G]
-  del username_y[:NUM_Y]
-  for user in username_org:
-    username_recycle[user] = datetime.date.today()
+  for un in username_cur[:len(cur_g_idx)]:
+    username_g.remove(un)
+  for un in username_cur[len(cur_g_idx):]:
+    username_y.remove(un)
+  for un in username_cur:
+    username_recycle[un] = datetime.date.today()
 
   Utils.store_pickle("username_g", username_g);
   Utils.store_pickle("username_y", username_y);

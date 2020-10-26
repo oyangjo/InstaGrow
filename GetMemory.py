@@ -1,13 +1,15 @@
 import Utils
 
 cur = Utils.load_pickle("username_cur")
+cur_g_idx = Utils.load_pickle("username_cur_g_index")
+cur_y_idx = Utils.load_pickle("username_cur_y_index")
 prev = Utils.load_pickle("username_prev")
 recycle = Utils.load_pickle("username_recycle")
 green = Utils.load_pickle("username_g")
 yellow = Utils.load_pickle("username_y")
 red = Utils.load_pickle("username_r")
 
-Utils.display_results(["current", "previous", "recycle", "red", "yellow", "green"], [cur, prev, list(recycle.keys()), red, yellow, green])
+Utils.display_results(["recycle", "red", "yellow", "green", "current", "current green index", "current yellow index", "previous"], [list(recycle.keys()), red, yellow, green, cur, cur_g_idx, cur_y_idx, prev])
 
 # print("CURRENT: \n" + str(cur))
 # print("-------------")

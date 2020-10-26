@@ -1,17 +1,9 @@
 import random
 
-t = [3, 52, 20, 40, 69]
-temp = []
-
-idx = random.sample(range(len(t)), 2)
-print("original" + str(t))
-print(idx)
-for i in idx:
-    temp.append(t[i])
-for elem in temp:
-    t.remove(elem)
-
-print(t)
+l = [1, 2, 3, 4, 5, 6, 7]
+temp = 2
+print(l[temp:])
+print(l[:temp])
 
 
 
