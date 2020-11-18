@@ -7,7 +7,7 @@ from datetime import date
 import Utils
 import pandas as pd
 
-MAX_FOLLOWERS = 6000
+MAX_FOLLOWERS = 7400
 MIN_FOLLOWERS = None
 MAX_FOLLOWING = None
 MIN_FOLLOWING = 100
