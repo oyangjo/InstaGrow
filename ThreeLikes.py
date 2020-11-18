@@ -15,8 +15,17 @@ if (NUM == ''):
   NUM = 50
 NUM_G = int(int(NUM)*.8)
 NUM_Y = int(int(NUM)*.2)
-MAX_L_H = 50
-MAX_L_D = 580
+MAX_L_H = 50              # max like per hour
+MAX_L_D = 580             # max daily like
+COMMENT_PER = 20
+LIKE_PER = 80
+COMMENTS = ["I love your pic!", "Love your style :)", "This is fire!", "Gorgeous!",
+            "You have a great profile", "This is just great :)", "Nothing beats this :)",
+            "Wow! I wish I have posts like that", "Sheesh! I needa step up my photo-game",
+            "This is just simply amazing lol", "Stay safe!", "Stay Safe out there!",
+            "Safety is always first :)", "Hope we all stay safe!", "Safety first!",
+            "OMG!", "Oh my!", "Sheeeesh", "Nice shot!", "Sheeesh! Nice shot!"]
+LIKES = 3
 
 insta_username = 'mrjoyang'
 insta_password = 'JoecLean423!'
@@ -26,14 +35,9 @@ session.set_quota_supervisor(enabled=True, sleep_after=["likes_h", "likes_d"], s
 
 with smart_run(session):
   #activity
-  session.set_comments(["I love your pic!", "Love your style :)", "This is fire!", "Gorgeous!",
-                        "You have a great profile", "This is just great :)", "Nothing beats this :)",
-                        "Wow! I wish I have posts like that", "Sheesh! I needa step up my photo-game",
-                        "This is just simply amazing lol", "Stay safe!", "Stay Safe out there!",
-                        "Safety is always first :)", "Hope we all stay safe!", "Safety first!",
-                        "OMG!", "Oh my!", "Sheeeesh", "Nice shot!", "Sheeesh! Nice shot!"])
-  session.set_do_comment(enabled=True, percentage=20)
-  session.set_do_like(True, percentage=80)
+  session.set_comments(COMMENTS)
+  session.set_do_comment(enabled=True, percentage=COMMENT_PER)
+  session.set_do_like(True, percentage=LIKE_PER)
   
   #load data
   username_g = Utils.load_pickle("username_g")
@@ -58,7 +62,7 @@ with smart_run(session):
   Utils.store_pickle('username_cur', username_cur)  #store the current session's info
 
   #start session
-  session.interact_by_users(username_cur, amount=3, randomize=False, media='Photo')
+  session.interact_by_users(username_cur, amount=LIKES, randomize=False, media='Photo')
 
   #load the new data back to memory
   for un in l1:
