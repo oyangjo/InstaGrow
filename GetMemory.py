@@ -1,4 +1,6 @@
 import Utils
+is_long = input('long? (y/n): ')
+if is_long == '': is_long = 'n'
 
 cur = Utils.load_pickle("username_cur")
 cur_g_idx = Utils.load_pickle("username_cur_g_index")
@@ -9,7 +11,7 @@ green = Utils.load_pickle("username_g")
 yellow = Utils.load_pickle("username_y")
 red = Utils.load_pickle("username_r")
 
-Utils.display_results(["recycle", "red", "yellow", "green", "current", "current green index", "current yellow index", "previous"], [list(recycle.keys()), red, yellow, green, cur, cur_g_idx, cur_y_idx, prev])
+Utils.display_results(is_long, ["recycle", "red", "yellow", "green", "current", "current green index", "current yellow index", "previous"], [list(recycle.keys()), red, yellow, green, cur, cur_g_idx, cur_y_idx, prev])
 
 # print("CURRENT: \n" + str(cur))
 # print("-------------")

@@ -22,33 +22,27 @@ def convert_to_int(s):
 
 def calc_ratio(a, b):
     return a/b if b != 0 else 1 
-
-# parse function 
-def parse_data(s): 
-    data = []
-    s = s.split("-")[0] 
-    s = s.split(" ") 
-
-    # assigning the values 
-    data.append( convert_to_int(s[0]) )  #followers
-    data.append( convert_to_int(s[2]) )  #followings
-    data.append( convert_to_int(s[4]) )  #num of posts
-    data.append( calc_ratio(convert_to_int(s[0]), convert_to_int(s[2])) ) #ratio
-      
-    return data 
   
 # scrape function 
 def scrape_data(username): 
+    user_info = []
     r = requests.get(URL.format(username))   # getting the request from url 
-    s = BeautifulSoup(r.text, "html.parser")  # converting the text 
+    str = BeautifulSoup(r.text, "html.parser")  # converting the text 
 
-    meta = s.find("meta", property ="og:description")  # finding meta info
+    meta = str.find("meta", property ="og:description")  # finding meta info
     if(meta):
-        info = parse_data(meta.attrs['content']) # calling parse method
-    
-    info.append( "\"is_private\":true" in s.prettify() )  # checking if private
+        s = meta.attrs['content']
+        s = s.split("-")[0] 
+        s = s.split(" ") 
 
-    return info
+        # assigning the values 
+        user_info.append( convert_to_int(s[0]) )  #followers
+        user_info.append( convert_to_int(s[2]) )  #followings
+        user_info.append( convert_to_int(s[4]) )  #num of posts
+        user_info.append( calc_ratio(convert_to_int(s[0]), convert_to_int(s[2])) ) #ratio
+
+    user_info.append( "\"is_private\":true" in str.prettify() )  # checking if private
+    return user_info
 
 def store_pickle(file_name, item):
     dbfile = open('Memory/' + file_name, 'wb') 
@@ -60,10 +54,11 @@ def load_pickle(file_name):
     item = pickle.load(dbfile) 
     return item
 
-def display_results(l_str, l):
-    for i in range(len(l)):
-        print(l_str[i].upper() + ": " + str(l[i]))
-        print("-------------")
+def display_results(is_long, l_str, l):
+    if is_long == 'y':
+        for i in range(len(l)):
+            print(l_str[i].upper() + ": " + str(l[i]))
+            print("-------------")
     
     for i in range(len(l)):
         print("# of " + l_str[i] + ": " + str(len(l[i])))
