@@ -1,25 +1,52 @@
-import random
+'''
+Reads url.txt 
+Calls instatouch for each url to save csv at RawData
+Calls GetInfo.py to categorize the csv to memory
 
-l = [1, 2, 3, 4, 5, 6, 7]
-temp = 2
-print(l[temp:])
-print(l[:temp])
+'''
 
+import os
+import logging
+import validators
+import Utils
 
+NUM = input("Number of commenters to scrape per posts: ")
 
-#stuff relating to cache
+#truncate the log file
+with open('current.log', 'w'):
+    pass
+Utils.my_logger()
 
-# print('123')
-# today = datetime.date.today()
-# print(yesterday)
-# print(today)
-# print(today - yesterday > datetime.timedelta(days = 21))
-# cur = Utils.load_pickle("username_cur")
-# rec = Utils.load_pickle("username_recycle")
+logging.info("OOOOOOOOOOOOOOOOOOOOOOOOOO")
+logging.info("Starting to RUN!!!")
+logging.info("OOOOOOOOOOOOOOOOOOOOOOOOOO")
 
-# for c in cur:
-#     if(c not in rec):
-#         rec[c] = datetime.date.today()
-#         print(c)
+logging.info("-----Fetching url's from url.txt-----")
+#creating list of urls from url.txt
+urls = []
+f = open("url.txt", "r")    #read url
+for u in f:
+    u = u.split('\n')[0]
+    u = u.split(' ')[0]
+    if(validators.url(u)):
+        urls.append(u)
+logging.info("You have " + str(len(urls)) + " url's")
 
-# print(len(rec))
+logging.info("-----Calling instatouch to convert url's to csv's-----")
+#calling instatouch for each url to make csv's
+os.chdir("RawData")     
+for i, url in enumerate(urls):
+    logging.info(str(i) + ". " + url)
+    os.system("instatouch comments " + url + " -c " + str(NUM) + " -t csv")
+    logging.info("Complete!!!")
+os.chdir("..")
+
+# #calling ProcessInfo to categorize csv usernames to memory
+# logging.info("-----Calling ProcessInfo.py to categorize and store usernames in memory-----")
+# os.system("python3 ProcessInfo.py")
+
+# logging.info("-----Clearing url.txt-----")
+# #delete txt file data
+# with open('url.txt', 'w') as fp: 
+#     pass
+# logging.info("Done!!!")
