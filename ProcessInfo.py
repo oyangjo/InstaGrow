@@ -1,5 +1,4 @@
 import os
-import csv
 import glob
 import logging
 from datetime import date
@@ -49,23 +48,31 @@ def main():
         if (un in username_r or un in username_recycle):    #if private/bad criteria or visited
             logging.info("private or visited")
             continue
-        #------- get info -------
-        followers, following, posts, ratio, is_private = Utils.scrape_data(un)   # calling scrape function 
         
-        #------- filter ---------
-        if(is_private or followers > MAX_FOLLOWERS or following < MIN_FOLLOWING or ratio > MAXRATIO or posts < MIN_POST):  #red
-            red.add(un)
-            logging.info("red")
-        elif(ratio > MEHRATIO and following < 1000):  #yellow
-            yellow.append(un)
-            logging.info("yellow")
-        else:   #green
-            green.append(un)
-            logging.info("green")
+        try:
+            #------- get info -------
+            followers, following, posts, ratio, is_private = Utils.scrape_data(un)   # calling scrape function 
+
+            #------- filter ---------
+            if(is_private or followers > MAX_FOLLOWERS or following < MIN_FOLLOWING or ratio > MAXRATIO or posts < MIN_POST):  #red
+                red.add(un)
+                logging.info("red")
+            elif(ratio > MEHRATIO and following < 1000):  #yellow
+                yellow.append(un)
+                logging.info("yellow")
+            else:   #green
+                green.append(un)
+                logging.info("green")
+        except ValueError:
+            logging.info("Could not grab {}'s meta data".format(un))
 
     logging.info("***Displaying Results***")
     #displaying results
     Utils.display_results(["green", "yellow", "red"], [green, yellow, red])
+
+    ans = input("Do you want to add these data in memory? (y/n)")   #check if user wanna add the data
+    if ans == 'n':
+        return
 
     logging.info("***Update Memory***")
     #------ writing to memory -----
